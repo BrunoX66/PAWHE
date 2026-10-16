@@ -1,6 +1,8 @@
 # PAWHE
 
-**Plex Account Watch History Exporter** — a single browser-console script that exports the watch history of your Plex account and turns it into a backup file you can import into another tracking service.
+**Plex Account Watch History Exporter** — a single browser-console script that exports the watch history of your **Plex account** and turns it into a backup file you can import into another tracking service.
+
+> **This exports from your Plex *account*, not from a Plex Media Server.** Plex's account-level watch history (the one on [watch.plex.tv](https://watch.plex.tv/account/history)) has no export option, and very few tools target it. If you run your own server and want its history, see [Limitations](#limitations).
 
 ![The PAWHE status panel after a successful export](PAWHE.jpg)
 
@@ -9,7 +11,9 @@
 
 ## Why
 
-Plex records everything you watch under **Account → Watch History** on [watch.plex.tv](https://watch.plex.tv/account/history), but offers no way to export it. PAWHE reads that history the same way the page does, in your own signed-in browser, and packages it for import elsewhere.
+Plex records everything you watch under **Account → Watch History** on [watch.plex.tv](https://watch.plex.tv/account/history), but offers no way to export it. That matters when your account holds the only copy: in my case, I no longer had access to the original server, so the history saved to my Plex account was all I had left.
+
+Tools for exporting from a Plex Media Server are plentiful, but I found almost none built for the *account* history, and the few I tried didn't work. So I made PAWHE. It reads that history the same way the page does, in your own signed-in browser, and packages it for import elsewhere.
 
 ## Features
 
@@ -70,11 +74,12 @@ ID_OVERRIDES: {
 
 ## Limitations
 
+- **Not a Plex Media Server export.** PAWHE only reads the history Plex stores on your account at watch.plex.tv. It does not talk to your own Plex Media Server, so it cannot export server-side history. For that, use one of the many tools made for exporting from a media server.
 - **Matching is by title and year.** Plex does not expose IMDb/TMDb/TVDB IDs on watch.plex.tv, so Simkl has to match each title by name and release year. Check the import result and use `TITLE_OVERRIDES` / `ID_OVERRIDES` for anything that lands on the wrong entry, then export and import again.
 - **Episode numbering can differ between services.** For example, a two-part episode that Plex lists as one episode may be two episodes on Simkl (or the other way round). Such episodes may need to be marked by hand after import.
 - **Only the first play is kept.** Rewatches are not exported to Simkl. Use `SAVE_ALL_PLAYS` if you want a record of every play.
 - **Only what Plex still has.** The export reflects your account's watch history as Plex currently shows it; plays Plex no longer lists cannot be recovered.
-- **Unofficial.** PAWHE relies on how watch.plex.tv currently loads its pages and data. If Plex changes its site, the script may stop working until it is updated.
+- **Unofficial.** PAWHE relies on how watch.plex.tv currently loads its pages and data. If Plex changes its site, the script may stop working until it is updated. If it stops working, [open an issue](../../issues).
 
 ## Contributing
 
